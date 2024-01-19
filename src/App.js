@@ -7,7 +7,8 @@ import loginService from './services/login'
 const App = () =>
 {
   const [ blogs, setBlogs ] = useState( [] )
-  const [ errorMessage, setErrorMessage ] = useState( null )
+  const [ message, setMessage ] = useState( null )
+  const [ messageType, setMessageType ] = useState( '' )
   const [ username, setUsername ] = useState( '' )
   const [ password, setPassword ] = useState( '' )
   const [ user, setUser ] = useState( null )
@@ -26,24 +27,26 @@ const App = () =>
     try
     {
       const user = await loginService.login( {
-        username, password,
+        username, password
       } )
       setUser( user )
+      console.log(user)
       setUsername( '' )
       setPassword( '' )
     } catch ( exception )
     {
-      setErrorMessage( 'Wrong credentials' )
-      setTimeout( () =>
-      {
-        setErrorMessage( null )
+      setMessageType( 'error' )
+      setMessage( 'Wrong credentials' )
+      setTimeout( () => { 
+        setMessage( null ) 
+        setMessageType( '' )
       }, 5000 )
     }
   }
 
   return (
     <div>
-      <Notification message={ errorMessage } />
+      <Notification message={ message } type={ messageType }/>
 
       <form onSubmit={ handleLogin }>
         <div>
