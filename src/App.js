@@ -29,6 +29,8 @@ const App = () =>
       const user = await loginService.login( {
         username, password
       } )
+
+      blogService.setToken(user.token)
       setUser( user )
       console.log(user)
       setUsername( '' )
@@ -76,6 +78,11 @@ const App = () =>
       <Notification message={ message } type={ messageType }/>
 
       {user === null && loginForm()}
+      {user !== null && 
+        <div>
+          {user.name} logged in.
+        </div>
+      }
 
       <h2>blogs</h2>
       { blogs.map( blog =>
