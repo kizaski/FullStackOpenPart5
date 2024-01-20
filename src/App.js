@@ -44,11 +44,8 @@ const App = () =>
     }
   }
 
-  return (
-    <div>
-      <Notification message={ message } type={ messageType }/>
-
-      <form onSubmit={ handleLogin }>
+  const loginForm = () => (
+    <form onSubmit={ handleLogin }>
         <div>
           username
           <input
@@ -69,6 +66,16 @@ const App = () =>
         </div>
         <button type="submit">login</button>
       </form>
+  )
+
+  // Todo
+  const blogForm = () => ( null )
+
+  return (
+    <div>
+      <Notification message={ message } type={ messageType }/>
+
+      {user === null && loginForm()}
 
       <h2>blogs</h2>
       { blogs.map( blog =>
