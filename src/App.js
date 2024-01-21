@@ -3,6 +3,7 @@ import Blog from './components/Blog'
 import Notification from './components/Notification'
 import LoginForm from './components/LoginForm'
 import Togglable from './components/Togglable'
+import NewBlogForm from './components/NewBlogForm'
 import blogService from './services/blogs'
 import loginService from './services/login'
 
@@ -121,38 +122,18 @@ const App = () =>
     }
   }
 
-  //
   const newBlogForm = () => (
-    <form onSubmit={handleNewBlog}>
-        <div>
-          title
-          <input
-            type="text"
-            value={ title }
-            name="Title"
-            onChange={ ( { target } ) => setTitle( target.value ) }
-          />
-        </div>
-        <div>
-          author
-          <input
-            type="text"
-            value={ author }
-            name="Author"
-            onChange={ ( { target } ) => setAuthor( target.value ) }
-          />
-        </div>
-        <div>
-          url
-          <input
-            type="text"
-            value={ url }
-            name="Url"
-            onChange={ ( { target } ) => setUrl( target.value ) }
-          />
-        </div>
-        <button type="submit">create</button>
-    </form>
+    <Togglable buttonLabel='new blog'>
+      <NewBlogForm 
+        handleSubmit={handleNewBlog}
+        handleTitleChange={( { target } ) => setTitle( target.value )}
+        titleVal={title}
+        handleAuthorChange={( { target } ) => setAuthor( target.value )}
+        authorVal={author}
+        handleUrlChange={( { target } ) => setUrl( target.value )}
+        urlVal={url}
+      />
+    </Togglable>
   )
 
   return (
@@ -170,9 +151,6 @@ const App = () =>
               logout
             </button>
           </p>
-          <h2>
-            Create new blog
-          </h2>
           <p>
             {newBlogForm()}
           </p>
