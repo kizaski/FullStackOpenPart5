@@ -4,10 +4,6 @@ import Notification from './components/Notification'
 import blogService from './services/blogs'
 import loginService from './services/login'
 
-// todo
-// exc 5.3 new blog form
-// exc 5.4 notif on successful and unsuccessful new blog
-
 const App = () =>
 {
   const [ blogs, setBlogs ] = useState( [] )
