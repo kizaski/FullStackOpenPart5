@@ -4,6 +4,10 @@ import Notification from './components/Notification'
 import blogService from './services/blogs'
 import loginService from './services/login'
 
+// todo
+// exc 5.3 new blog form
+// exc 5.4 notif on successful and unsuccessful new blog
+
 const App = () =>
 {
   const [ blogs, setBlogs ] = useState( [] )
@@ -12,6 +16,9 @@ const App = () =>
   const [ username, setUsername ] = useState( '' )
   const [ password, setPassword ] = useState( '' )
   const [ user, setUser ] = useState( null )
+  const [ title, setTitle ] = useState( '' )
+  const [ author, setAuthor ] = useState( '' )
+  const [ url, setUrl ] = useState( '' )
 
   useEffect( () =>
   {
@@ -20,8 +27,6 @@ const App = () =>
     )
   }, [] )
 
-  // todo logout button with
-  // window.localStorage.removeItem('loggedBlogappUser')
   useEffect( () =>
   {
     const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser')
@@ -94,8 +99,74 @@ const App = () =>
       </form>
   )
 
-  // Todo
-  const blogForm = () => ( null )
+  const handleNewBlog = async ( event ) =>
+  {
+    event.preventDefault()
+
+    try
+    {
+      const newblog = await blogService.create({
+        title: title,
+        author: author,
+        url: url,
+        user: user.id
+      })
+
+      setBlogs([...blogs,newblog])
+
+      setMessageType( 'info' )
+      setMessage( `A new blog ${newblog.title} by ${newblog.author} is added` )
+      setTimeout( () => { 
+        setMessage( null ) 
+        setMessageType( '' )
+      }, 5000 )
+
+      setTitle('')
+      setAuthor('')
+      setUrl('')
+    } catch ( exception )
+    {
+      setMessageType( 'error' )
+      setMessage( 'Error creating blog.' )
+      setTimeout( () => { 
+        setMessage( null ) 
+        setMessageType( '' )
+      }, 5000 )
+    }
+  }
+
+  const newBlogForm = () => (
+    <form onSubmit={handleNewBlog}>
+        <div>
+          title
+          <input
+            type="text"
+            value={ title }
+            name="Title"
+            onChange={ ( { target } ) => setTitle( target.value ) }
+          />
+        </div>
+        <div>
+          author
+          <input
+            type="text"
+            value={ author }
+            name="Author"
+            onChange={ ( { target } ) => setAuthor( target.value ) }
+          />
+        </div>
+        <div>
+          url
+          <input
+            type="text"
+            value={ url }
+            name="Url"
+            onChange={ ( { target } ) => setUrl( target.value ) }
+          />
+        </div>
+        <button type="submit">create</button>
+    </form>
+  )
 
   return (
     <div>
@@ -104,12 +175,20 @@ const App = () =>
       {user === null && loginForm()}
       {user !== null && 
         <div>
-          <div>
-            {user.name} logged in.
-          </div>
-          <button onClick={handleLogout}>
-            logout
-          </button>
+          <p>
+            <div>
+              {user.name} logged in.
+            </div>
+            <button onClick={handleLogout}>
+              logout
+            </button>
+          </p>
+          <h2>
+            Create new blog
+          </h2>
+          <p>
+            {newBlogForm()}
+          </p>
         </div>
       }
 
