@@ -125,7 +125,7 @@ const App = () =>
   }
 
   const newBlogForm = () => (
-    <Togglable buttonLabel='new blog'>
+    <Togglable buttonLabel='new blog' buttonHideLabel='cancel'>
       <NewBlogForm 
         handleSubmit={handleNewBlog}
         handleTitleChange={( { target } ) => setTitle( target.value )}
@@ -145,8 +145,7 @@ const App = () =>
       {user === null && loginForm()}
       {user !== null && 
         <div>
-          <div> 
-          {/* <p>  */}
+          <div>
             <div>
               {user.name} logged in.
             </div>
