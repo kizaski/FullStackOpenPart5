@@ -7,6 +7,8 @@ import NewBlogForm from './components/NewBlogForm'
 import blogService from './services/blogs'
 import loginService from './services/login'
 
+// todo exc 5.7
+
 const App = () =>
 {
   const [ blogs, setBlogs ] = useState( [] )
@@ -75,7 +77,7 @@ const App = () =>
   }
 
   const loginForm = () => (
-    <Togglable buttonLabel='login'>
+    <Togglable buttonLabel='login' buttonHideLabel='cancel'>
       <LoginForm
         username={username}
         password={password}
