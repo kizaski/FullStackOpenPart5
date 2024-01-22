@@ -6,6 +6,7 @@ import Togglable from './Togglable'
 // like button with put request (exc 5.9)
 // sort blog posts by the number of likes with the array sort method
 // button for deleting blog posts (Show the button only if blog was added by current logged in user)
+// add Vite and ESlint config .eslintrc.cjs file
 const Blog = ( { blog } ) =>
 {
   const blogStyle = {

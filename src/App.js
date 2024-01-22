@@ -7,8 +7,6 @@ import NewBlogForm from './components/NewBlogForm'
 import blogService from './services/blogs'
 import loginService from './services/login'
 
-// todo exc 5.7
-
 const App = () =>
 {
   const [ blogs, setBlogs ] = useState( [] )
