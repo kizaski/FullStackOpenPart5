@@ -145,17 +145,18 @@ const App = () =>
       {user === null && loginForm()}
       {user !== null && 
         <div>
-          <p>
+          <div> 
+          {/* <p>  */}
             <div>
               {user.name} logged in.
             </div>
             <button onClick={handleLogout}>
               logout
             </button>
-          </p>
-          <p>
+          </div>
+          <div>
             {newBlogForm()}
-          </p>
+          </div>
         </div>
       }
 
