@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import Togglable from './Togglable'
+import blogService from '../services/blogs'
 
 // todo hide/show button instead of Togglable
 // exc 5.7
@@ -18,6 +18,19 @@ const Blog = ( { blog } ) =>
     marginBottom: 5
   }
   const [visible, setVisible] = useState(false)
+  const [likes, setLikes] = useState(blog.likes)
+
+  const updatedBlog = {
+    title: blog.title,
+    author: blog.author,
+    url: blog.url,
+    likes: likes + 1,
+  }
+
+  const addLike = () => {
+    setLikes(likes + 1)
+    blogService.update(blog.id, updatedBlog)
+  }
 
   return (
     <div style={blogStyle}>
@@ -28,7 +41,7 @@ const Blog = ( { blog } ) =>
         {visible && (
           <div>
             { blog.url } <br />
-            likes: { blog.likes } <button>like</button> <br />
+            likes: { likes } <button onClick={addLike}>like</button> <br />
             Author: { blog.author } <br />
           </div>
         )}
