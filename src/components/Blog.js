@@ -8,7 +8,7 @@ import blogService from '../services/blogs'
 // sort blog posts by the number of likes with the array sort method
 // button for deleting blog posts (Show the button only if blog was added by current logged in user)
 // add Vite and ESlint config .eslintrc.cjs file
-const Blog = ( { blog } ) =>
+const Blog = ( { blog, deleteBlog, updateBlog } ) =>
 {
   const blogStyle = {
     paddingTop: 10,
@@ -25,11 +25,12 @@ const Blog = ( { blog } ) =>
     author: blog.author,
     url: blog.url,
     likes: likes + 1,
+    id: blog.id
   }
 
   const addLike = () => {
     setLikes(likes + 1)
-    blogService.update(blog.id, updatedBlog)
+    updateBlog(updatedBlog)
   }
 
   return (
@@ -43,6 +44,9 @@ const Blog = ( { blog } ) =>
             { blog.url } <br />
             likes: { likes } <button onClick={addLike}>like</button> <br />
             Author: { blog.author } <br />
+            <button onClick={() => deleteBlog(blog.id, blog)}>
+              delete blog
+            </button> <br />
           </div>
         )}
     </div>
