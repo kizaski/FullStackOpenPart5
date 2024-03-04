@@ -1,6 +1,5 @@
 import { useState } from 'react'
 
-// button for deleting blog posts (Show the button only if blog was added by current logged in user)
 // add Vite and ESlint config .eslintrc.cjs file
 const Blog = ( { blog, deleteBlog, updateBlog, user } ) =>
 {
@@ -29,24 +28,24 @@ const Blog = ( { blog, deleteBlog, updateBlog, user } ) =>
 
   return (
     <div style={blogStyle}>
-        { blog.title } 
-        <button onClick={() => setVisible(!visible)}>
-          {visible ? 'hide' : 'show'}
-        </button> <br />
-        {visible && (
-          <div>
-            { blog.url } <br />
+      { blog.title }
+      <button onClick={() => setVisible(!visible)}>
+        {visible ? 'hide' : 'show'}
+      </button> <br />
+      {visible && (
+        <div>
+          { blog.url } <br />
             likes: { likes } <button onClick={addLike}>like</button> <br />
             Author: { blog.author } <br />
-            {((user && blog.user) && (blog.user.username === user.username)) && (
-              <div>
-                <button onClick={() => deleteBlog(blog.id, blog)}>
+          {((user && blog.user) && (blog.user.username === user.username)) && (
+            <div>
+              <button onClick={() => deleteBlog(blog.id, blog)}>
                   delete blog
-                </button> <br />
-              </div>
-            )}
-          </div>
-        )}
+              </button> <br />
+            </div>
+          )}
+        </div>
+      )}
     </div>
   )
 }

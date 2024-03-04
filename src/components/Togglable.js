@@ -35,4 +35,6 @@ Togglable.propTypes = {
   buttonHideLabel: PropTypes.string.isRequired,
 }
 
+Togglable.displayName = 'Togglable'
+
 export default Togglable
