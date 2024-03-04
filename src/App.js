@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Blog from './components/Blog'
 import Notification from './components/Notification'
 import LoginForm from './components/LoginForm'
@@ -18,6 +18,8 @@ const App = () =>
   const [ title, setTitle ] = useState( '' )
   const [ author, setAuthor ] = useState( '' )
   const [ url, setUrl ] = useState( '' )
+
+  const blogFormRef = useRef()
 
   useEffect( () =>
   {
@@ -90,6 +92,8 @@ const App = () =>
   {
     event.preventDefault()
 
+    blogFormRef.current.toggleVisibility()
+
     try
     {
       const newblog = await blogService.create({
@@ -123,7 +127,7 @@ const App = () =>
   }
 
   const newBlogForm = () => (
-    <Togglable buttonLabel='new blog' buttonHideLabel='cancel'>
+    <Togglable buttonLabel='new blog' buttonHideLabel='cancel' ref={blogFormRef}>
       <NewBlogForm 
         handleSubmit={handleNewBlog}
         handleTitleChange={( { target } ) => setTitle( target.value )}

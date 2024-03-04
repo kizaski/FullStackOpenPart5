@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import Togglable from './Togglable'
 
 // todo hide/show button instead of Togglable
@@ -16,15 +17,21 @@ const Blog = ( { blog } ) =>
     borderWidth: 1,
     marginBottom: 5
   }
+  const [visible, setVisible] = useState(false)
 
   return (
     <div style={blogStyle}>
-        { blog.title } <button>hide/show (not implemented)</button> <br />
-      <Togglable buttonLabel='show' buttonHideLabel='hide'>
-        { blog.url } <br />
-        likes: { blog.likes } <br />
-        Author: { blog.author } <br />
-      </Togglable>
+        { blog.title } 
+        <button onClick={() => setVisible(!visible)}>
+          {visible ? 'hide' : 'show'}
+        </button> <br />
+        {visible && (
+          <div>
+            { blog.url } <br />
+            likes: { blog.likes } <button>like</button> <br />
+            Author: { blog.author } <br />
+          </div>
+        )}
     </div>
   )
 }
