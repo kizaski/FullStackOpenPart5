@@ -7,6 +7,8 @@ import NewBlogForm from './components/NewBlogForm'
 import blogService from './services/blogs'
 import loginService from './services/login'
 
+// todo c Testing React apps
+
 const App = () =>
 {
   const [ blogs, setBlogs ] = useState( [] )
@@ -23,9 +25,10 @@ const App = () =>
 
   useEffect( () =>
   {
-    blogService.getAll().then( blogs =>
-      setBlogs( blogs.sort( ( a, b ) => b.likes - a.likes ) )
-    )
+    blogService.getAll().then( blogsObj => {
+      const blogsArr = Array.from(blogsObj)
+      setBlogs( blogsArr.sort( ( a, b ) => b.likes - a.likes ) )
+    })
   }, [] )
 
   useEffect( () =>
