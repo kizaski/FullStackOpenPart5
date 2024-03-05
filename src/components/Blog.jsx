@@ -1,6 +1,5 @@
 import { useState } from 'react'
 
-// add Vite and ESlint config .eslintrc.cjs file
 const Blog = ( { blog, deleteBlog, updateBlog, user } ) =>
 {
   const blogStyle = {

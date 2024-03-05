@@ -7,8 +7,6 @@ import NewBlogForm from './components/NewBlogForm'
 import blogService from './services/blogs'
 import loginService from './services/login'
 
-// todo c Testing React apps
-
 const App = () =>
 {
   const [ blogs, setBlogs ] = useState( [] )
