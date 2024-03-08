@@ -1,3 +1,5 @@
+To start frontend run ``npm run dev`` and to run the backend ``npm start`` in [FullStackOpenPart4](https://github.com/kizaski/FullStackOpenPart4)
+
 # React + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
