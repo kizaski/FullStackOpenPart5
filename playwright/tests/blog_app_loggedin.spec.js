@@ -1,30 +1,49 @@
 import { test, expect, beforeEach, describe } from '@playwright/test'
 
-describe('When logged in', () => {
-  beforeEach(async ({ page, request }) => {
-    await request.post('http:localhost:3001/api/testing/reset')
-    await request.post('http://localhost:3001/api/users', {
-      data: {
-        name: 'Matti Luukkainen',
-        username: 'mluukkai',
-        password: 'salainen'
-      }
-    })
-
-    await page.goto('http://localhost:5173')
-
-    // move to helper func ?
-    await page.getByRole('button', { name: 'login' }).click()
-    const usernameel = page.locator('#username-input')
-    await usernameel.fill('mluukkai')
-    const passel = page.locator('#password-input')
-    await passel.fill('salainen')
-    await page.getByRole('button', { name: 'login' }).click()
-
-    // todo
-    const storage = await page.context().storageState()
-    console.log('localStorage', storage.origins[0].localStorage[0].value)
+beforeEach(async ({ page, request }) => {
+  // move up
+  await request.post('http:localhost:3001/api/testing/reset')
+  await request.post('http://localhost:3001/api/users', {
+    data: {
+      name: 'Matti Luukkainen',
+      username: 'mluukkai',
+      password: 'salainen'
+    }
   })
+
+  await page.goto('http://localhost:5173')
+
+  // move to helper func ? / move up
+  await page.getByRole('button', { name: 'login' }).click()
+  const usernameel = page.locator('#username-input')
+  await usernameel.fill('mluukkai')
+  const passel = page.locator('#password-input')
+  await passel.fill('salainen')
+  await page.getByRole('button', { name: 'login' }).click()
+})
+
+describe('When logged in', () => {
+  // beforeEach(async ({ page, request }) => {
+  //   // move up
+  //   await request.post('http:localhost:3001/api/testing/reset')
+  //   await request.post('http://localhost:3001/api/users', {
+  //     data: {
+  //       name: 'Matti Luukkainen',
+  //       username: 'mluukkai',
+  //       password: 'salainen'
+  //     }
+  //   })
+
+  //   await page.goto('http://localhost:5173')
+
+  //   // move to helper func ? / move up
+  //   await page.getByRole('button', { name: 'login' }).click()
+  //   const usernameel = page.locator('#username-input')
+  //   await usernameel.fill('mluukkai')
+  //   const passel = page.locator('#password-input')
+  //   await passel.fill('salainen')
+  //   await page.getByRole('button', { name: 'login' }).click()
+  // })
   
   // webkit fails for some reason
   test('a new blog can be created', async ({ page }) => {
@@ -51,21 +70,54 @@ describe('When logged in', () => {
 
 describe('When user has created a new blog', () => {
   beforeEach(async ({ page, request }) => {
+    // move up
+    await request.post('http:localhost:3001/api/testing/reset')
+    await request.post('http://localhost:3001/api/users', {
+      data: {
+        name: 'Matti Luukkainen',
+        username: 'mluukkai',
+        password: 'salainen'
+      }
+    })
+
+    await page.goto('http://localhost:5173')
+
+    await page.evaluate(() => window.localStorage.clear())
+
+    // move to helper func ?
+    await page.getByRole('button', { name: 'login' }).click()
+    const usernameel = page.locator('#username-input')
+    await usernameel.fill('mluukkai')
+    const passel = page.locator('#password-input')
+    await passel.fill('salainen')
+    await page.getByRole('button', { name: 'login' }).click()
+
+    await page.waitForTimeout(1500)
+    const storage = await page.context().storageState()
+    // console.log('Token', JSON.parse(storage.origins[0].localStorage[0].value).token)
+    console.log('Token', storage)
+    const TOKEN = JSON.parse(storage.origins[0].localStorage[0].value).token
+
     await request.post('http://localhost:3001/api/blogs', {
       data: {
         'title': 'Title',
         'author': 'Author',
         'url': 'Url',
         'likes': 0
+      },
+      headers: {
+        Authorization: `Bearer ${TOKEN}`
       }
     })
+
+    await page.reload()
   })
   
   // exc 5.20
   // Do a test that makes sure the blog can be edited.
   test('blog can be edited (liked)', async ({ page }) => {
   
-    // TODO
+    await page.getByRole('button', { name: 'show' }).click()
   
     await expect({}).toEqual({})
   })
