@@ -1,5 +1,6 @@
 import { test, expect, beforeEach, describe } from '@playwright/test'
 
+describe('When logged in', () => {
 beforeEach(async ({ page, request }) => {
   // move up
   await request.post('http:localhost:3001/api/testing/reset')
@@ -11,7 +12,7 @@ beforeEach(async ({ page, request }) => {
     }
   })
 
-  await page.goto('http://localhost:5173')
+    await page.goto('http://localhost:5173')
 
   // move to helper func ? / move up
   await page.getByRole('button', { name: 'login' }).click()
@@ -21,29 +22,6 @@ beforeEach(async ({ page, request }) => {
   await passel.fill('salainen')
   await page.getByRole('button', { name: 'login' }).click()
 })
-
-describe('When logged in', () => {
-  // beforeEach(async ({ page, request }) => {
-  //   // move up
-  //   await request.post('http:localhost:3001/api/testing/reset')
-  //   await request.post('http://localhost:3001/api/users', {
-  //     data: {
-  //       name: 'Matti Luukkainen',
-  //       username: 'mluukkai',
-  //       password: 'salainen'
-  //     }
-  //   })
-
-  //   await page.goto('http://localhost:5173')
-
-  //   // move to helper func ? / move up
-  //   await page.getByRole('button', { name: 'login' }).click()
-  //   const usernameel = page.locator('#username-input')
-  //   await usernameel.fill('mluukkai')
-  //   const passel = page.locator('#password-input')
-  //   await passel.fill('salainen')
-  //   await page.getByRole('button', { name: 'login' }).click()
-  // })
   
   // webkit fails for some reason
   test('a new blog can be created', async ({ page }) => {
