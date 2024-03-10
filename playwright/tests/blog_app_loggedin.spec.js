@@ -20,6 +20,10 @@ describe('When logged in', () => {
     const passel = page.locator('#password-input')
     await passel.fill('salainen')
     await page.getByRole('button', { name: 'login' }).click()
+
+
+    const storage = await page.context().storageState()
+    console.log('localStorage', storage.origins[0].localStorage[0].value)
   })
   
   // webkit fails for some reason
