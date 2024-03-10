@@ -93,11 +93,15 @@ describe('When user has created a new blog', () => {
   
   // exc 5.20
   // Do a test that makes sure the blog can be edited.
-  test('blog can be edited (liked)', async ({ page }) => {
-  
+  test('blog can be edited (liked)', async ({ page }) => {  
+
     await page.getByRole('button', { name: 'show' }).click()
+
+    let likes_amt = Number(page.locator('.blog-likes span').innerText)
+
+    await page.getByRole('button', { name: 'like' }).click()
   
-    await expect({}).toEqual({})
+    await expect(likes_amt).toEqual(likes_amt + 1)
   })
     
   // exc 5.21
