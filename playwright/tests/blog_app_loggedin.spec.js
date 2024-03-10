@@ -21,7 +21,7 @@ describe('When logged in', () => {
     await passel.fill('salainen')
     await page.getByRole('button', { name: 'login' }).click()
 
-
+    // todo
     const storage = await page.context().storageState()
     console.log('localStorage', storage.origins[0].localStorage[0].value)
   })
