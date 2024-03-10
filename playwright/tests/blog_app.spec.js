@@ -111,61 +111,61 @@ describe('Blog app', () => {
       await expect(blogElem).toHaveText('Sample title')
     })
   })
+})
 
-  describe('When user has created a new blog', () => {
-    beforeEach(async ({ page, request }) => {
-      await request.post('http://localhost:3001/api/blogs', {
-        data: {
-          'title': 'Title',
-          'author': 'Author',
-          'url': 'Url',
-          'likes': 0
-        }
-      })
-    })
-    
-    // exc 5.20
-    // Do a test that makes sure the blog can be edited.
-    test('blog can be edited (liked)', async ({ page }) => {
-    
-      // TODO
-    
-      await expect({}).toEqual({})
-    })
-      
-    // exc 5.21
-    // user who added the blog can delete the blog
-    test('user who added the blog can delete the blog', async ({ page }) => {
-    
-      // TODO
-    
-      await expect({}).toEqual({})
-    })
-      
-    // exc 5.22
-    // only the user who added the blog sees the blog's delete button
-    test('only the user who added the blog sees the blogs delete button', async ({ page }) => {
-    
-      // TODO
-    
-      await expect({}).toEqual({})
+describe('When user has created a new blog', () => {
+  beforeEach(async ({ page, request }) => {
+    await request.post('http://localhost:3001/api/blogs', {
+      data: {
+        'title': 'Title',
+        'author': 'Author',
+        'url': 'Url',
+        'likes': 0
+      }
     })
   })
+  
+  // exc 5.20
+  // Do a test that makes sure the blog can be edited.
+  test('blog can be edited (liked)', async ({ page }) => {
+  
+    // TODO
+  
+    await expect({}).toEqual({})
+  })
     
-  // exc 5.23
-  // that the blogs are arranged in the order according to the likes, the blog with the most likes first.
-  describe('Some blogs are present', () => {
-    beforeEach(async ({ page }) => {
-      // login
+  // exc 5.21
+  // user who added the blog can delete the blog
+  test('user who added the blog can delete the blog', async ({ page }) => {
+  
+    // TODO
+  
+    await expect({}).toEqual({})
+  })
+    
+  // exc 5.22
+  // only the user who added the blog sees the blog's delete button
+  test('only the user who added the blog sees the blogs delete button', async ({ page }) => {
+  
+    // TODO
+  
+    await expect({}).toEqual({})
+  })
+})
+  
+// exc 5.23
+// that the blogs are arranged in the order according to the likes, the blog with the most likes first.
+describe('Some blogs are present', () => {
+  beforeEach(async ({ page }) => {
+    // login
 
-      // user adds blog through api call
-    })
+    // user adds blog through api call
+  })
 
-    test('blogs are arranged most liked first', async ({ page }) => {
-    
-      // TODO
-    
-      await expect({}).toEqual({})
-    })
+  test('blogs are arranged most liked first', async ({ page }) => {
+  
+    // TODO
+  
+    await expect({}).toEqual({})
   })
 })
