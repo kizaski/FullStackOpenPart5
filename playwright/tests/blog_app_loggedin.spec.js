@@ -1,6 +1,8 @@
 import { test, expect, beforeEach, describe, afterAll } from '@playwright/test'
 import { createBlog } from './helpers'
 
+const TIMEOUT = 2000
+
 describe('When logged in', () => {
   beforeEach(async ({ page, request }) => {
     await request.post('http:localhost:3001/api/testing/reset')
@@ -48,7 +50,7 @@ describe('When logged in', () => {
     beforeEach(async ({ page, request }) => {
 
       // eslint-disable-next-line playwright/no-wait-for-timeout
-      await page.waitForTimeout(2000)
+      await page.waitForTimeout(TIMEOUT)
       const storage = await page.context().storageState()
       // console.log('Token', JSON.parse(storage.origins[0].localStorage[0].value).token)
       console.log('storageState', storage)
@@ -74,7 +76,7 @@ describe('When logged in', () => {
     test('blog can be edited (liked)', async ({ page }) => {  
   
       // eslint-disable-next-line playwright/no-wait-for-timeout
-      await page.waitForTimeout(2000)
+      await page.waitForTimeout(TIMEOUT)
       // await page.locator('div div.blog-title ~ button').waitFor()
       await page.locator('div div.blog-title ~ button').click()
       // await page.getByRole('button', { name: 'show' }).click()
@@ -118,7 +120,7 @@ describe('When logged in', () => {
     beforeEach(async ({ page, request }) => {
 
       // eslint-disable-next-line playwright/no-wait-for-timeout
-      await page.waitForTimeout(2000)
+      await page.waitForTimeout(TIMEOUT)
       const storage = await page.context().storageState()
       // console.log('Token', JSON.parse(storage.origins[0].localStorage[0].value).token)
       console.log('storageState', storage)
