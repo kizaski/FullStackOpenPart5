@@ -72,7 +72,6 @@ describe('When logged in', () => {
     // Do a test that makes sure the blog can be edited.
     test('blog can be edited (liked)', async ({ page }) => {  
   
-      // this doesnt work idk why
       // eslint-disable-next-line playwright/no-wait-for-timeout
       await page.waitForTimeout(2000)
       // await page.locator('div div.blog-title ~ button').waitFor()
@@ -102,7 +101,10 @@ describe('When logged in', () => {
     // only the user who added the blog sees the blog's delete button
     test('only the user who added the blog sees the blogs delete button', async ({ page }) => {
     
-      // TODO
+      await page.getByRole('button', { name: 'show' }).click()
+      const delbtnEl = page.locator('.blog-delete-btn')
+
+      await expect(delbtnEl).toBeVisible()
     
       await expect({}).toEqual({})
     })
