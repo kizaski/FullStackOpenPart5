@@ -1,4 +1,5 @@
 import { test, expect, beforeEach, describe, afterAll } from '@playwright/test'
+import { createBlog } from './helpers'
 
 describe('When logged in', () => {
   beforeEach(async ({ page, request }) => {
@@ -113,15 +114,36 @@ describe('When logged in', () => {
   // exc 5.23
   // that the blogs are arranged in the order according to the likes, the blog with the most likes first.
   describe('Some blogs are present', () => {
-    beforeEach(async ({ page }) => {
-      // login
-  
-      // user adds blog through api call
+    // only works with --debug
+    beforeEach(async ({ page, request }) => {
+
+      // eslint-disable-next-line playwright/no-wait-for-timeout
+      await page.waitForTimeout(2000)
+      const storage = await page.context().storageState()
+      // console.log('Token', JSON.parse(storage.origins[0].localStorage[0].value).token)
+      console.log('storageState', storage)
+      const TOKEN = JSON.parse(storage.origins[0].localStorage[0].value).token
+
+      createBlog(request, TOKEN, { 'title': 'Title 0', 'author': 'The Author', 'url': 'Url', 'likes': 0 })
+      createBlog(request, TOKEN, { 'title': 'Title 1', 'author': 'The Author', 'url': 'Url', 'likes': 5 })
+      createBlog(request, TOKEN, { 'title': 'Title 2', 'author': 'The Author', 'url': 'Url', 'likes': 4 })
+      createBlog(request, TOKEN, { 'title': 'Title 3', 'author': 'The Author', 'url': 'Url', 'likes': 3 })
+      createBlog(request, TOKEN, { 'title': 'Title 4', 'author': 'The Author', 'url': 'Url', 'likes': 10 })
+
+      await page.reload()
     })
     
     test('blogs are arranged most liked first', async ({ page }) => {
       
-      // TODO
+      await page.getByRole('button', { name: 'new blog' }).click()
+
+      // create array of numbers (of the likes)
+
+      // show click 
+      // get likes
+      // push likes to array
+
+      // expect array to equal hardcoded sorted
       
       await expect({}).toEqual({})
     })
