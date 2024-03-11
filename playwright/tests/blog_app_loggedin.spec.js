@@ -43,6 +43,7 @@ describe('When logged in', () => {
   })
 
   describe('When user has created a new blog', () => {
+    // only works with --debug
     beforeEach(async ({ page, request }) => {
 
       // eslint-disable-next-line playwright/no-wait-for-timeout
@@ -72,6 +73,8 @@ describe('When logged in', () => {
     test('blog can be edited (liked)', async ({ page }) => {  
   
       // this doesnt work idk why
+      // eslint-disable-next-line playwright/no-wait-for-timeout
+      await page.waitForTimeout(2000)
       // await page.locator('div div.blog-title ~ button').waitFor()
       await page.locator('div div.blog-title ~ button').click()
       // await page.getByRole('button', { name: 'show' }).click()
@@ -86,21 +89,13 @@ describe('When logged in', () => {
     // exc 5.21 
     // user who added the blog can delete the blog
     test('user who added the blog can delete the blog', async ({ page, request }) => {
-    
       
-      const users = await request.get('http:localhost:3001/api/users')
+      await page.getByRole('button', { name: 'show' }).click()
+      page.on('dialog', dialog => dialog.accept())
+      await page.locator('.blog-delete-btn').click()
 
-      // eslint-disable-next-line playwright/no-wait-for-timeout
-      await page.waitForTimeout(4000)
-
-      console.log('users', await users.json())
-
-      const currentUser = await users.json().find(obj => obj.username === 'mluukkai')
-
-      console.log('currentUser', currentUser)
-
-    
-      await expect({}).toEqual({})
+      const blogsListEl = page.locator('#blogs-list')
+      await expect(blogsListEl).toBeEmpty()
     })
       
     // exc 5.22

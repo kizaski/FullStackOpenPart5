@@ -35,7 +35,7 @@ const Blog = ( { blog, deleteBlog, updateBlog, user } ) =>
         <div>
           <div>{ blog.url } <br /> </div>
           <div className='blog-likes'> likes: <span>{ likes }</span> <button onClick={addLike}>like</button> <br /> </div>
-            Author: { blog.author } <br />
+          <div className='blog-author'> Author: <span>{ blog.author }</span> <br /> </div>
           {((user && blog.user) && (blog.user.username === user.username)) && (
             <div>
               <button className='blog-delete-btn' onClick={() => deleteBlog(blog.id, blog)}>
