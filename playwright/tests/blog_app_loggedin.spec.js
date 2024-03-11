@@ -1,5 +1,4 @@
-import { test, expect, beforeEach, describe } from '@playwright/test'
-import { afterAll } from 'vitest'
+import { test, expect, beforeEach, describe, afterAll } from '@playwright/test'
 
 describe('When logged in', () => {
   beforeEach(async ({ page, request }) => {
@@ -45,12 +44,12 @@ describe('When logged in', () => {
 
   describe('When user has created a new blog', () => {
     beforeEach(async ({ page, request }) => {
-        
+
       // eslint-disable-next-line playwright/no-wait-for-timeout
-      await page.waitForTimeout(1500)
+      await page.waitForTimeout(2000)
       const storage = await page.context().storageState()
       // console.log('Token', JSON.parse(storage.origins[0].localStorage[0].value).token)
-      console.log('Token', storage)
+      console.log('storageState', storage)
       const TOKEN = JSON.parse(storage.origins[0].localStorage[0].value).token
   
       await request.post('http://localhost:3001/api/blogs', {
@@ -74,7 +73,8 @@ describe('When logged in', () => {
   
       // this doesnt work idk why
       // await page.locator('div div.blog-title ~ button').waitFor()
-      await page.getByRole('button', { name: 'show' }).click()
+      await page.locator('div div.blog-title ~ button').click()
+      // await page.getByRole('button', { name: 'show' }).click()
   
       let likes_amt = Number(page.locator('.blog-likes span').innerText)
   
@@ -85,9 +85,20 @@ describe('When logged in', () => {
       
     // exc 5.21 
     // user who added the blog can delete the blog
-    test('user who added the blog can delete the blog', async ({ page }) => {
+    test('user who added the blog can delete the blog', async ({ page, request }) => {
     
-      // TODO
+      
+      const users = await request.get('http:localhost:3001/api/users')
+
+      // eslint-disable-next-line playwright/no-wait-for-timeout
+      await page.waitForTimeout(4000)
+
+      console.log('users', await users.json())
+
+      const currentUser = await users.json().find(obj => obj.username === 'mluukkai')
+
+      console.log('currentUser', currentUser)
+
     
       await expect({}).toEqual({})
     })
